@@ -12,6 +12,8 @@ public:
 
   Surface(const Point &p1, const Point &p2, const Point &p3);
 
+  Point calcNormal();
+
   Surface translate(Point);
 
   Surface rotateX(double);

@@ -40,6 +40,27 @@ class MyWindow {
     void drawPixel(int x, int y);
 
     /**
+     * fill a triangle given by int x1,int y1, int x2, int y2, int x3, int y3
+     * @param { int } x1
+     * @param { int } y1
+     * @param { int } x2
+     * @param { int } y2
+     * @param { int } x3
+     * @param { int } y3
+     */
+    void fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3);
+
+    /**
+     *
+     */
+    void fillFlatBottomTriangle(int x1, int y1, int x2, int y2, int x3, int y3);
+
+    /**
+     *
+     */
+    void fillFlatTopTriangle(int x1, int y1, int x2, int y2, int x3, int y3);
+
+    /**
     * draw a line between the points given by (x1, y1) and (x2, y2)
     * @param { int } x1 The x coordinate of the starting point of the line
     * @param { int } y1 The y coordinate of the starting point of the line

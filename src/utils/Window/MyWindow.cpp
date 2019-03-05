@@ -9,6 +9,24 @@ int abs(int x){
   return x > 0 ? x : -1 * x;
 }
 
+int max(int a, int b, int c){
+  if(c > b && c > a) return c;
+  if(b > a && b > c) return b;
+  return a;
+}
+
+int mid(int a, int b, int c){
+  if((b < a && a < c) || (c < a && a < b)) return a;
+  if((a < b && b < c) || (c < b && b < a)) return b;
+  return c;
+}
+
+int min(int a, int b, int c){
+  if(a < b && a < c) return a;
+  if(b < a && b < c) return b;
+  return c;
+}
+
 // default constructor
 MyWindow::MyWindow(){
   display = XOpenDisplay((char *)0); // create a display. Connect to XServer
@@ -116,13 +134,117 @@ void MyWindow::drawScene(){
 
   for(int i = 0; i < projected.getObjects().size(); i++){
     Object o = projected.getObjects()[i];
-    
+
     for(int j = 0; j < o.getSurfaces().size(); j++){
       Surface s = o.getSurfaces()[j];
       drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y));
       drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p3.x), (int)(s.p3.y));
       drawLine((int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y));
+      if(j == 0){
+        fillTriangle((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y));
+      }
     }
+  }
+
+  //drawLine(256, 256, 0,1);
+  //drawLine(256,256,512,0);
+  //drawLine(0,1,512,0);
+  //fillTriangle(256, 256, 0, 0, 512, 0);
+}
+
+void MyWindow::fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3){
+  int yMax, xMax, yMid, xMid, yMin, xMin;
+  if(y1 > y2 && y1 > y3){
+    yMax = y1;
+    xMax = x1;
+    if(y2 > y3){
+      yMid = y2; xMid = x2;
+      yMin = y3; xMin = x3;
+    }
+    else {
+      yMid = y3; xMid = x3;
+      yMin = y2; xMin = x2;
+    }
+  }
+  else if (y2 > y1 && y2 > y3){
+    yMax = y2;
+    xMax = x2;
+    if(y2 > y3){
+      yMid = y2; xMid = x2;
+      yMin = y3; xMin = x3;
+    }
+    else {
+      yMid = y3; xMid = x3;
+      yMin = y2; xMin = x2;
+    }
+  }
+  else {
+    yMax = y3;
+    xMax = x3;
+    if(y2 > y1){
+      yMid = y2; xMid = x2;
+      yMin = y1; xMin = x1;
+    }
+    else {
+      yMid = y1; xMid = x1;
+      yMin = y2; xMin = x2;
+    }
+  }
+
+  //printf("Trangle\t(%i,%i) - (%i,%i) - (%i,%i)\n", xMax,yMax,xMid,yMid,xMin,yMin);
+
+  if(yMin == yMid){
+    fillFlatBottomTriangle(xMax, yMax, xMid, yMid, xMin, yMin);
+  }
+  else if(yMax == yMin){
+    fillFlatTopTriangle(xMax, yMax, xMid, yMid, xMin, yMin);
+  }
+  else {
+    int yNew, xNew;
+
+    xNew = (int)(xMax + ((double)(yMid - yMax) / (double)(yMin - yMax)) * (xMin - xMax));
+    yNew = yMid;
+
+    fillFlatBottomTriangle(xMax, yMax, xMid, yMid, xNew, yNew);
+    fillFlatTopTriangle(xNew, yNew, xMid, yMid, xMin, yMin);
+  }
+}
+
+void MyWindow::fillFlatBottomTriangle(int x1, int y1, int x2, int y2, int x3, int y3){
+  // printf("Flat Bottom Trangle\t(%i,%i) - (%i,%i) - (%i,%i)\n", x1,y1,x2,y2,x3,y3);
+
+  if(y1 == y2) y1++;
+  if(y2 == y3) y3--;
+
+  double m1 = (double)(x1-x2)/(double)(y1-y2);
+  double m2 = (double)(x1-x3)/(double)(y1-y3);
+
+  double cx1 = x2;
+  double cx2 = x3;
+
+  for(int i = y2; i < y1; i++){
+    drawLine((int)cx1, i, (int)cx2, i);
+    cx1 += m1;
+    cx2 += m2;
+  }
+}
+
+void MyWindow::fillFlatTopTriangle(int x1, int y1, int x2, int y2, int x3, int y3){
+  printf("Flat Top Trangle\t(%i,%i) - (%i,%i) - (%i,%i)\n", x1,y1,x2,y2,x3,y3);
+
+  if(y1 == y3) y1++;
+  if(y2 == y3) y3--;
+
+  double m1 = (double)(x1-x3)/(double)(y1-y3);
+  double m2 = (double)(x2-x3)/(double)(y2-y3);
+
+  double cx1 = x1;
+  double cx2 = x2;
+
+  for(int i = y1; i > y3; i--){
+    drawLine((int)cx1, i, (int)cx2, i);
+    cx1 -= m1;
+    cx2 -= m2;
   }
 }
 

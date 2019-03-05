@@ -30,11 +30,11 @@ int main(int argc, char *argv[]){
 }
 
 Scene getScene(){
-	// Sphere s1(175.0);
+	Sphere s1(175.0);
   // s1.rotateY(25.0);
-  // s1.translate(Point(100.0, 0.0, -500.0));
-  Torus t1(75.0, 200.0);
-  t1.translate(Point(100.0, 0.0, -500.0));
+  s1.translate(Point(100.0, 0.0, -500.0));
+  // Torus t1(75.0, 200.0);
+  // t1.translate(Point(100.0, 0.0, -500.0));
 
   // Torus t2(30.0, 100.0);
   // t2.rotateX(30.0);
@@ -45,7 +45,7 @@ Scene getScene(){
 	//c1.translate(Point(100, 0.0, -500.0));
 
   Scene scene;
-  scene.addObject(t1);
+  scene.addObject(s1);
 
 	return scene;
 }

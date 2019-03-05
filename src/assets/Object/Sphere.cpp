@@ -2,7 +2,7 @@
 #include "Sphere.hpp"
 
 Sphere::Sphere(double radius){
-  this->resolution = 32;
+  this->resolution = 4;
 
   const double angle = 360.0 / this->resolution;
 
