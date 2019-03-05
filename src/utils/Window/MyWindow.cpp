@@ -131,22 +131,26 @@ void MyWindow::draw(){
 
 void MyWindow::drawScene(){
   Scene projected = camera.projectScene(scene);
+  Point lightSource = scene.getLightSource();
 
   for(int i = 0; i < projected.getObjects().size(); i++){
     Object o = projected.getObjects()[i];
+    unsigned long colour = o.colour;
 
     for(int j = 0; j < o.getSurfaces().size(); j++){
       Surface s = o.getSurfaces()[j];
-      drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y));
-      drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p3.x), (int)(s.p3.y));
-      drawLine((int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y));
+      unsigned long surfaceColour = s.calcShade(colour, lightSource);
+      // drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y));
+      // drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p3.x), (int)(s.p3.y));
+      //  drawLine((int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y));
+      // printf("%f\n", s.calcCentroid().z);
 
-      fillTriangle((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y));
+      fillTriangle((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y), surfaceColour);
     }
   }
 }
 
-void MyWindow::fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3){
+void MyWindow::fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3, unsigned long surfaceColour){
   int yMax, xMax, yMid, xMid, yMin, xMin;
   if(y1 > y2 && y1 > y3){
     yMax = y1;
@@ -188,10 +192,10 @@ void MyWindow::fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3){
   //printf("Trangle\t(%i,%i) - (%i,%i) - (%i,%i)\n", xMax,yMax,xMid,yMid,xMin,yMin);
 
   if(yMin == yMid){
-    fillFlatBottomTriangle(xMax, yMax, xMid, yMid, xMin, yMin);
+    fillFlatBottomTriangle(xMax, yMax, xMid, yMid, xMin, yMin, surfaceColour);
   }
   else if(yMax == yMin){
-    fillFlatTopTriangle(xMax, yMax, xMid, yMid, xMin, yMin);
+    fillFlatTopTriangle(xMax, yMax, xMid, yMid, xMin, yMin, surfaceColour);
   }
   else {
     int yNew, xNew;
@@ -199,12 +203,12 @@ void MyWindow::fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3){
     xNew = (int)(xMax + ((double)(yMid - yMax) / (double)(yMin - yMax)) * (xMin - xMax));
     yNew = yMid;
 
-    fillFlatBottomTriangle(xMax, yMax, xMid, yMid, xNew, yNew);
-    fillFlatTopTriangle(xNew, yNew, xMid, yMid, xMin, yMin);
+    fillFlatBottomTriangle(xMax, yMax, xMid, yMid, xNew, yNew, surfaceColour);
+    fillFlatTopTriangle(xNew, yNew, xMid, yMid, xMin, yMin, surfaceColour);
   }
 }
 
-void MyWindow::fillFlatBottomTriangle(int x1, int y1, int x2, int y2, int x3, int y3){
+void MyWindow::fillFlatBottomTriangle(int x1, int y1, int x2, int y2, int x3, int y3, unsigned long colour){
   // printf("Flat Bottom Trangle\t(%i,%i) - (%i,%i) - (%i,%i)\n", x1,y1,x2,y2,x3,y3);
 
   if(y1 == y2) y1++;
@@ -217,14 +221,14 @@ void MyWindow::fillFlatBottomTriangle(int x1, int y1, int x2, int y2, int x3, in
   double cx2 = x3;
 
   for(int i = y2; i < y1; i++){
-    drawLine((int)cx1, i, (int)cx2, i);
+    drawLine((int)cx1, i, (int)cx2, i, colour);
     cx1 += m1;
     cx2 += m2;
   }
 }
 
-void MyWindow::fillFlatTopTriangle(int x1, int y1, int x2, int y2, int x3, int y3){
-  printf("Flat Top Trangle\t(%i,%i) - (%i,%i) - (%i,%i)\n", x1,y1,x2,y2,x3,y3);
+void MyWindow::fillFlatTopTriangle(int x1, int y1, int x2, int y2, int x3, int y3, unsigned long colour){
+  //  printf("Flat Top Trangle\t(%i,%i) - (%i,%i) - (%i,%i)\n", x1,y1,x2,y2,x3,y3);
 
   if(y1 == y3) y1++;
   if(y2 == y3) y3--;
@@ -236,38 +240,38 @@ void MyWindow::fillFlatTopTriangle(int x1, int y1, int x2, int y2, int x3, int y
   double cx2 = x2;
 
   for(int i = y1; i > y3; i--){
-    drawLine((int)cx1, i, (int)cx2, i);
+    drawLine((int)cx1, i, (int)cx2, i, colour);
     cx1 -= m1;
     cx2 -= m2;
   }
 }
 
 // bresenham's algorithm
-void MyWindow::drawLine(int x1, int y1, int x2, int y2){
+void MyWindow::drawLine(int x1, int y1, int x2, int y2, unsigned long colour){
   if(abs(y2 - y1) < abs(x2 - x1)){
     if(x1 > x2){
       // draw line low, reverse ends
-      drawLineLow(x2, y2, x1, y1);
+      drawLineLow(x2, y2, x1, y1, colour);
     }
     else {
       // draw line low, normal
-      drawLineLow(x1, y1, x2, y2);
+      drawLineLow(x1, y1, x2, y2, colour);
     }
   }
   else {
     if(y1 > y2){
       // draw line high, reverse ends
-      drawLineHigh(x2, y2, x1, y1);
+      drawLineHigh(x2, y2, x1, y1, colour);
     }
     else {
       // draw line low, reverse ends
-      drawLineHigh(x1, y1, x2, y2);
+      drawLineHigh(x1, y1, x2, y2, colour);
     }
   }
 }
 
 // helper for drawLine
-void MyWindow::drawLineLow(int x1, int y1, int x2, int y2){
+void MyWindow::drawLineLow(int x1, int y1, int x2, int y2, unsigned long colour){
   int dx = x2 - x1;
   int dy = y2 - y1;
   int yi = 1;
@@ -282,7 +286,7 @@ void MyWindow::drawLineLow(int x1, int y1, int x2, int y2){
 
   // walk in x
   for(int x = x1; x <= x2; x++){
-    drawPixel(x, y);
+    drawPixel(x, y, colour);
     if(D > 0){
       y += yi;
       D -= 2 * dx;
@@ -292,7 +296,7 @@ void MyWindow::drawLineLow(int x1, int y1, int x2, int y2){
 }
 
 // helper for drawLine
-void MyWindow::drawLineHigh(int x1, int y1, int x2, int y2){
+void MyWindow::drawLineHigh(int x1, int y1, int x2, int y2, unsigned long colour){
   int dx = x2 - x1;
   int dy = y2 - y1;
   int xi = 1;
@@ -307,7 +311,7 @@ void MyWindow::drawLineHigh(int x1, int y1, int x2, int y2){
 
   // walk in y
   for(int y = y1; y <= y2; y++){
-    drawPixel(x, y);
+    drawPixel(x, y, colour);
     if(D > 0){
       x += xi;
       D -= 2 * dy;

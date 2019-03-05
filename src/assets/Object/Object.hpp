@@ -15,6 +15,8 @@ protected:
 	std::set<Point> points;
 	std::vector<Surface> surfaces;
 public:
+	unsigned long colour;
+
 	/*
 	 * Creates a new object with no vertices
 	 * */

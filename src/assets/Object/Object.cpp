@@ -35,7 +35,24 @@ void Object::addSurface(Surface surface){
 		}
 	}
 
-	this->surfaces.push_back(surface);
+	// this->surfaces.push_back(surface);
+
+	if(this->surfaces.size() == 0){
+		this->surfaces.push_back(surface);
+	} else {
+		double depth = surface.calcCentroid().z;
+		double curr = this->surfaces[0].calcCentroid().z;
+
+		for(std::vector<Surface>::iterator it = this->surfaces.begin(); it < this->surfaces.end(); it++){
+			if(depth < curr){
+				this->surfaces.insert(it, surface);
+				return;
+			}
+			Surface s = *it;
+			curr = s.calcCentroid().z;
+		}
+		this->surfaces.push_back(surface);
+	}
 }
 
 std::vector<Surface> Object::getSurfaces(){

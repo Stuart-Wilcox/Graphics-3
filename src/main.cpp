@@ -21,7 +21,7 @@ int main(int argc, char *argv[]){
 	window.scene = getScene(); // set the window's scene
 
 	/* CHANGE BELOW LINE TO USE A DIFFERENT CAMERAS */
-	window.camera = getCamera5(); // set the window's camera
+	window.camera = getCamera1(); // set the window's camera
 
 
 	window.show(); // map and display graphic
@@ -31,8 +31,10 @@ int main(int argc, char *argv[]){
 
 Scene getScene(){
 	Sphere s1(175.0);
-  // s1.rotateY(25.0);
-  s1.translate(Point(100.0, 0.0, -500.0));
+	s1.colour = 1000;
+  s1.rotateY(90.0);
+  s1.translate(Point(0.0, 0.0, -500.0));
+
   // Torus t1(75.0, 200.0);
   // t1.translate(Point(100.0, 0.0, -500.0));
 
@@ -47,11 +49,13 @@ Scene getScene(){
   Scene scene;
   scene.addObject(s1);
 
+	scene.setLightSource(Point(100, 500, -500));
+
 	return scene;
 }
 
 Camera getCamera1(){
-	return Camera(Point(0.0, 150.0, 0.0), 0.0, 0.0, 0.0);
+	return Camera(Point(0.0, 100.0, 0.0), 0.0, 0.0, 0.0);
 }
 
 Camera getCamera2(){

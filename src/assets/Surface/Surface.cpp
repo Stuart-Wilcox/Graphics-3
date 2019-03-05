@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <cmath>
 #include "Surface.hpp"
 #include "../../utils/Matrix/Matrix.hpp"
 
@@ -34,6 +35,36 @@ Point Surface::calcNormal(){
   );
 
   return normal;
+}
+
+Point Surface::calcCentroid(){
+  return Point(
+    (this->p1.x + this->p2.x + this->p3.x) / 3.0,
+    (this->p1.y + this->p2.y + this->p3.y) / 3.0,
+    (this->p1.z + this->p2.z + this->p3.z) / 3.0
+  );
+}
+
+unsigned long Surface::calcShade(unsigned long colour, Point lightSource){
+  Point normal = this->calcNormal();
+  Point centroid = this->calcCentroid();
+
+  Point vect1(normal.x - centroid.x, normal.y - centroid.y, normal.z - centroid.z);
+  Point vect2(lightSource.x - centroid.x, lightSource.y - centroid.y, lightSource.z - centroid.z);
+
+  double magnitude1 = sqrt((vect1.x*vect1.x) + (vect1.y*vect2.y) + (vect1.z*vect1.z));
+  double magnitude2 = sqrt((vect2.x*vect2.x) + (vect2.y*vect2.y) + (vect2.z*vect2.z));
+  double magnitudeProduct = magnitude1*magnitude2;
+
+  double dotProduct = (vect1.x*vect2.x) + (vect1.y*vect2.y) + (vect1.z*vect2.z);
+  if(dotProduct < 0){
+    dotProduct = 0.0;
+  }
+
+  double angle = acos(dotProduct/magnitudeProduct);
+  double coefficient = (angle / 3.141528);
+
+  return coefficient * colour;
 }
 
 Surface Surface::translate(Point point){

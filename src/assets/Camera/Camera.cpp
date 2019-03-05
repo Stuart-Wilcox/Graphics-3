@@ -87,6 +87,7 @@ Point Camera::projectPoint(Point point){
 
   b.x = (d.x*(e.z/d.z)) + e.x;
   b.y = (d.y*(e.z/d.z)) + e.y;
+  b.z = (point.z);
   // b.x = (c.x - a.x) * (factor * (b.z - a.z) / (c.z - a.z));
   // b.y = (c.y - a.y) * (factor * (b.z - a.z) / (c.z - a.z));
 

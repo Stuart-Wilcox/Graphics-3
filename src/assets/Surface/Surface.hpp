@@ -14,6 +14,10 @@ public:
 
   Point calcNormal();
 
+  Point calcCentroid();
+
+  unsigned long calcShade(unsigned long colour, Point lightSource);
+
   Surface translate(Point);
 
   Surface rotateX(double);

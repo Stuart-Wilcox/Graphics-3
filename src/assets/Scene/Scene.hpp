@@ -14,6 +14,8 @@ private:
 	static const int MAX_Y=1024;
 	static const int MAX_Z=1024;
 	std::vector<Object> objects;
+	Point lightSource;
+	int ambientLight;
 
 public:
 	/*
@@ -30,6 +32,22 @@ public:
 	 * Returns the object in the scene
 	 * */
 	std::vector<Object> getObjects();
+
+	void setAmbientLight(int ambientLight){
+		this->ambientLight = ambientLight;
+	}
+
+	int getAmbientLight(){
+		return this->ambientLight;
+	}
+
+	void setLightSource(Point lightSource){
+		this->lightSource = lightSource;
+	}
+
+	Point getLightSource(){
+		return this->lightSource;
+	}
 
 	/*
 	 * Prints the scene to stdout

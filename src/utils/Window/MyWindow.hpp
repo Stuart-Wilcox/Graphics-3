@@ -53,17 +53,17 @@ class MyWindow {
      * @param { int } x3
      * @param { int } y3
      */
-    void fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3);
+    void fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3, unsigned long);
 
     /**
      *
      */
-    void fillFlatBottomTriangle(int x1, int y1, int x2, int y2, int x3, int y3);
+    void fillFlatBottomTriangle(int x1, int y1, int x2, int y2, int x3, int y3, unsigned long = 0);
 
     /**
      *
      */
-    void fillFlatTopTriangle(int x1, int y1, int x2, int y2, int x3, int y3);
+    void fillFlatTopTriangle(int x1, int y1, int x2, int y2, int x3, int y3, unsigned long = 0);
 
     /**
     * draw a line between the points given by (x1, y1) and (x2, y2)
@@ -72,7 +72,7 @@ class MyWindow {
     * @param { int } x2 The x coordinate of the ending point of the line
     * @param { int } y2 The y coordinate of the ending point of the line
     */
-    void drawLine(int x1, int y1, int x2, int y2);
+    void drawLine(int x1, int y1, int x2, int y2, unsigned long = 0);
 
     /**
     * helper function to aid drawLine
@@ -82,7 +82,7 @@ class MyWindow {
     * @param { int } x2 The x coordinate of the ending point of the line
     * @param { int } y2 The y coordinate of the ending point of the line
     */
-    void drawLineLow(int x1, int y1, int x2, int y2);
+    void drawLineLow(int x1, int y1, int x2, int y2, unsigned long = 0);
 
     /**
     * helper function to aid drawLine
@@ -92,7 +92,7 @@ class MyWindow {
     * @param { int } x2 The x coordinate of the ending point of the line
     * @param { int } y2 The y coordinate of the ending point of the line
     */
-    void drawLineHigh(int x1, int y1, int x2, int y2);
+    void drawLineHigh(int x1, int y1, int x2, int y2, unsigned long = 0);
 
   public:
     Scene scene;
