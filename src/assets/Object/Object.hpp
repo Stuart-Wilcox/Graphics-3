@@ -1,16 +1,19 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-
+#include <cstdio>
+#include <set>
 #include <vector>
-#include "../Edge/Edge.hpp"
+#include "../Surface/Surface.hpp"
+#include "../Point/Point.hpp"
 
 /*
  * Represents an abstract 3D object, which is a collection of vertices
  * */
 class Object {
 protected:
-	std::vector<Edge> edges;
+	std::set<Point> points;
+	std::vector<Surface> surfaces;
 public:
 	/*
 	 * Creates a new object with no vertices
@@ -20,12 +23,12 @@ public:
 	/*
 	 * Adds a Edge to the object's vertices
 	 * */
-	void addEdge(Edge);
+	void addSurface(Surface);
 
 	/*
 	 * Returns a vector of the object's vertices
 	 * */
-	std::vector<Edge> getEdges();
+	std::vector<Surface> getSurfaces();
 
 	/*
 	 * Translates the object, using the given point as a direction vector
@@ -55,6 +58,14 @@ public:
 	 * Prints the object to stdout
 	 * */
 	void print();
+
+	void printPoints(){
+		printf("%i\n", this->points.size());
+		for(std::set<Point>::iterator it=this->points.begin(); it!=this->points.end();++it){
+			Point p = *it;
+			p.print();
+		}
+	}
 };
 
 #endif

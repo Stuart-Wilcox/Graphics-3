@@ -1,4 +1,6 @@
 #include <cmath>
+#include <vector>
+#include <cstdio>
 #include "Camera.hpp"
 
 #define PI 3.141592
@@ -49,22 +51,24 @@ Camera::Camera(Point position, double angleX, double angleY, double angleZ): cam
 
 Scene Camera::projectScene(Scene scene){
   Scene s;
-  for(int i = 0; i < scene.getObjects().size(); i++){
-    s.addObject(this->projectObject(scene.getObjects()[i]));
+  std::vector<Object> o = scene.getObjects();
+  for(int i = 0; i < o.size(); i++){
+    s.addObject(this->projectObject(o[i]));
   }
   return s;
 }
 
 Object Camera::projectObject(Object object){
   Object o;
-  for(int i = 0; i < object.getEdges().size(); i++){
-    o.addEdge(this->projectEdge(object.getEdges()[i]));
+  std::vector<Surface> s = object.getSurfaces();
+  for(int i = 0; i < s.size(); i++){
+    o.addSurface(this->projectSurface(s[i]));
   }
   return o;
 }
 
-Edge Camera::projectEdge(Edge vertex){
-  return Edge(this->projectPoint(vertex.p1), this->projectPoint(vertex.p2));
+Surface Camera::projectSurface(Surface surface){
+  return Surface(this->projectPoint(surface.p1), this->projectPoint(surface.p2), this->projectPoint(surface.p3));
 }
 
 Point Camera::projectPoint(Point point){

@@ -2,10 +2,6 @@
 #include <math.h>
 #include "MyWindow.hpp"
 #include "../../assets/Camera/Camera.hpp"
-#include "../../assets/Object/Sphere.hpp"
-#include "../../assets/Object/Torus.hpp"
-#include "../../assets/Object/Cone.hpp"
-#include "../../assets/Object/Coordinates.hpp"
 #include "../../assets/Scene/Scene.hpp"
 
 // simple abs function
@@ -120,9 +116,12 @@ void MyWindow::drawScene(){
 
   for(int i = 0; i < projected.getObjects().size(); i++){
     Object o = projected.getObjects()[i];
-    for(int j = 0; j < o.getEdges().size(); j++){
-      Edge v = o.getEdges()[j];
-      drawLine((int)(v.p1.x), (int)(v.p1.y), (int)(v.p2.x), (int)(v.p2.y));
+    // o.print();
+    for(int j = 0; j < o.getSurfaces().size(); j++){
+      Surface s = o.getSurfaces()[j];
+      drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y));
+      drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p3.x), (int)(s.p3.y));
+      drawLine((int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y));
     }
   }
 }

@@ -6,6 +6,7 @@
 #include "../Edge/Edge.hpp"
 #include "../Object/Object.hpp"
 #include "../Scene/Scene.hpp"
+#include "../Surface/Surface.hpp"
 
 /*
  * Represents a camera object, which captures the 3D scene and provides the projection ont the screen
@@ -24,7 +25,7 @@ public:
    /*
     * Projects a single vertex
     */
-    Edge projectEdge(Edge);
+    Surface projectSurface(Surface);
 
     /*
      * Projects a single object

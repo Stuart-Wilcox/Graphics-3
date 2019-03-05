@@ -42,3 +42,31 @@ Point Point::rotateZ(double angle){
 Point Point::translate(Point direction){
 	return Point(this->x + direction.x, this->y + direction.y, this->z + direction.z);
 }
+
+bool Point::operator<(const Point &rhs){
+	if(rhs.x == this->x && rhs.y == this->y && rhs.z == this->z){
+		return false;
+	}
+	return true;
+}
+
+const bool Point::operator<(const Point &rhs) const {
+	const double epsilon = 0.5;
+	bool x = std::abs(rhs.x - this->x) < epsilon;
+	bool y = std::abs(rhs.y - this->y) < epsilon;
+	bool z = std::abs(rhs.z - this->z) < epsilon;
+
+	if(x && y && z){
+		return false;
+	}
+
+	if(!x){
+		return this->x < rhs.x;
+	}
+	else if(!y){
+		return this->y < rhs.y;
+	}
+	else{
+		return this->z < rhs.z;
+	}
+}

@@ -4,8 +4,8 @@
 #include "utils/Window/MyWindow.hpp"
 #include "assets/Camera/Camera.hpp"
 #include "assets/Scene/Scene.hpp"
-#include "assets/Object/Sphere.hpp"
-#include "assets/Object/Torus.hpp"
+// #include "assets/Object/Sphere.hpp"
+// #include "assets/Object/Torus.hpp"
 #include "assets/Object/Cone.hpp"
 
 Scene getScene();
@@ -23,28 +23,31 @@ int main(int argc, char *argv[]){
 	/* CHANGE BELOW LINE TO USE A DIFFERENT CAMERAS */
 	window.camera = getCamera5(); // set the window's camera
 
+
 	window.show(); // map and display graphic
 
 	return 0;
 }
 
 Scene getScene(){
-	Sphere s1(50.0);
-  s1.rotateY(25.0);
-  s1.translate(Point(-150.0, 200.0, -550.0));
-
-  Torus t1(70.0, 170.0);
-  t1.translate(Point(100.0, 0.0, -500.0));
+	// Sphere s1(50.0);
+  // s1.rotateY(25.0);
+  // s1.translate(Point(-150.0, 200.0, -550.0));
+	//
+  // Torus t1(70.0, 170.0);
+  // t1.translate(Point(100.0, 0.0, -500.0));
 
   // Torus t2(30.0, 100.0);
   // t2.rotateX(30.0);
   // t2.rotateZ(30.0);
   // t2.translate(Point(100.0, 250.0, -550.0));
 
+	Cone c1(50.0, 75.0);
+	c1.translate(Point(100, 0.0, -500.0));
+	c1.printPoints();
+
   Scene scene;
-  scene.addObject(s1);
-  scene.addObject(t1);
-  // scene.addObject(t2);
+  scene.addObject(c1);
 
 	return scene;
 }

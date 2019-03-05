@@ -49,6 +49,13 @@ public:
 	 * Prints the point to stdout
 	 * */
 	void print();
+
+	/**
+	 * Compare operator for set
+	 */
+	 bool operator<(const Point &rhs);
+	 const bool operator<(const Point &rhs) const;
+
 };
 
 #endif
