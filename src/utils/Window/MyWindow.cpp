@@ -140,16 +140,10 @@ void MyWindow::drawScene(){
       drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y));
       drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p3.x), (int)(s.p3.y));
       drawLine((int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y));
-      if(j == 0){
-        fillTriangle((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y));
-      }
+
+      fillTriangle((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y));
     }
   }
-
-  //drawLine(256, 256, 0,1);
-  //drawLine(256,256,512,0);
-  //drawLine(0,1,512,0);
-  //fillTriangle(256, 256, 0, 0, 512, 0);
 }
 
 void MyWindow::fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3){
@@ -325,6 +319,12 @@ void MyWindow::drawLineHigh(int x1, int y1, int x2, int y2){
 // light one pixel at given position
 void MyWindow::drawPixel(int x, int y){
   XSetForeground(display, gc, black); // draw pixel in black
+  XDrawPoint(display, window, gc, x, y); // use lower level method to colour pixel
+  XFlush(display); // flush to the display (could be optimized if only done once in draw(), but not an issue for now)
+}
+
+void MyWindow::drawPixel(int x, int y, unsigned long colour){
+  XSetForeground(display, gc, colour); // draw pixel in black
   XDrawPoint(display, window, gc, x, y); // use lower level method to colour pixel
   XFlush(display); // flush to the display (could be optimized if only done once in draw(), but not an issue for now)
 }

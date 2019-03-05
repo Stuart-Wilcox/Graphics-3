@@ -40,6 +40,11 @@ class MyWindow {
     void drawPixel(int x, int y);
 
     /**
+     * draws a single pixel of the given colour at the specified point
+     */
+    void drawPixel(int x, int y, unsigned long colour);
+
+    /**
      * fill a triangle given by int x1,int y1, int x2, int y2, int x3, int y3
      * @param { int } x1
      * @param { int } y1
