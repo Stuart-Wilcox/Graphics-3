@@ -116,7 +116,7 @@ void MyWindow::drawScene(){
 
   for(int i = 0; i < projected.getObjects().size(); i++){
     Object o = projected.getObjects()[i];
-    // o.print();
+    
     for(int j = 0; j < o.getSurfaces().size(); j++){
       Surface s = o.getSurfaces()[j];
       drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y));

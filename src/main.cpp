@@ -4,7 +4,7 @@
 #include "utils/Window/MyWindow.hpp"
 #include "assets/Camera/Camera.hpp"
 #include "assets/Scene/Scene.hpp"
-// #include "assets/Object/Sphere.hpp"
+#include "assets/Object/Sphere.hpp"
 // #include "assets/Object/Torus.hpp"
 #include "assets/Object/Cone.hpp"
 
@@ -30,9 +30,9 @@ int main(int argc, char *argv[]){
 }
 
 Scene getScene(){
-	// Sphere s1(50.0);
+	Sphere s1(175.0);
   // s1.rotateY(25.0);
-  // s1.translate(Point(-150.0, 200.0, -550.0));
+  s1.translate(Point(100.0, 0.0, -500.0));
 	//
   // Torus t1(70.0, 170.0);
   // t1.translate(Point(100.0, 0.0, -500.0));
@@ -42,12 +42,11 @@ Scene getScene(){
   // t2.rotateZ(30.0);
   // t2.translate(Point(100.0, 250.0, -550.0));
 
-	Cone c1(50.0, 75.0);
-	c1.translate(Point(100, 0.0, -500.0));
-	c1.printPoints();
+	//Cone c1(50.0, 75.0);
+	//c1.translate(Point(100, 0.0, -500.0));
 
   Scene scene;
-  scene.addObject(c1);
+  scene.addObject(s1);
 
 	return scene;
 }
