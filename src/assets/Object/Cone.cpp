@@ -15,7 +15,7 @@ Cone::Cone(double radius, double height){
 
   // figure out the points on the circle
   for(int i = 1; i < this->resolution; i++){
-    p = p.rotateY(angle);
+    p = p.rotateY(-1.0*angle);
     circle.push_back(p);
   }
 
@@ -24,7 +24,7 @@ Cone::Cone(double radius, double height){
 
   this->addSurface(Surface(circle[0], circle[this->resolution-1], top));
   this->addSurface(Surface(circle[0], circle[this->resolution-1], centre));
-  for(int i = 1; i < this->resolution; i++){
+  for(int i = 1; i <= this->resolution; i++){
     this->addSurface(Surface(circle[i-1], circle[i], top));
     this->addSurface(Surface(circle[i-1], circle[i], centre));
   }

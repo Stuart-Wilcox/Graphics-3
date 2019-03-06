@@ -32,8 +32,8 @@ int main(int argc, char *argv[]){
 Scene getScene(){
 	Sphere s1(175.0);
 	s1.colour = 1000;
-  s1.rotateY(90.0);
-  s1.translate(Point(0.0, 0.0, -500.0));
+  	s1.rotateY(90.0);
+  	s1.translate(Point(0.0, 0.0, -500.0));
 
   // Torus t1(75.0, 200.0);
   // t1.translate(Point(100.0, 0.0, -500.0));
@@ -43,13 +43,14 @@ Scene getScene(){
   // t2.rotateZ(30.0);
   // t2.translate(Point(100.0, 250.0, -550.0));
 
-	//Cone c1(50.0, 75.0);
-	//c1.translate(Point(100, 0.0, -500.0));
+	Cone c1(150.0, 175.0);
+	c1.translate(Point(100, 0.0, -500.0));
+	c1.colour = 255;
 
   Scene scene;
   scene.addObject(s1);
 
-	scene.setLightSource(Point(100, 500, -500));
+	scene.setLightSource(Point(0, -100, -400));
 
 	return scene;
 }

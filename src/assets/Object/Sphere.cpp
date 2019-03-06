@@ -2,7 +2,7 @@
 #include "Sphere.hpp"
 
 Sphere::Sphere(double radius){
-  this->resolution = 16;
+  this->resolution = 32;
 
   const double angle = 180.0 / (double)this->resolution;
 
@@ -23,7 +23,9 @@ Sphere::Sphere(double radius){
 
   for(int j = 0; j < 2*this->resolution; j++){
     for(int i = 1; i <= this->resolution; i++){
-      this->addSurface(Surface(semiCircle[i],semiCircle[i-1],semiCircle2[i-1]));
+      //
+      this->addSurface(Surface(semiCircle[i-1],semiCircle[i],semiCircle2[i-1]));
+      //
       this->addSurface(Surface(semiCircle2[i],semiCircle2[i-1],semiCircle[i]));
     }
 

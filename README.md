@@ -37,3 +37,6 @@ Before submitting your assignment, please refer to the [assignment marking](http
 1. Run the program by using `./bin/main`. It should open a window with the expected graphic displayed
 
 2. Close the window by typing 'q' or clicking the 'X' button
+
+## Ouput
+![ball.png](photos/Ball.png)

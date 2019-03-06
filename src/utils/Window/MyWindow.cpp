@@ -27,6 +27,12 @@ int min(int a, int b, int c){
   return c;
 }
 
+void swap(int& a, int& b){
+  int temp = a;
+  a = b;
+  b = temp;
+}
+
 // default constructor
 MyWindow::MyWindow(){
   display = XOpenDisplay((char *)0); // create a display. Connect to XServer
@@ -139,55 +145,42 @@ void MyWindow::drawScene(){
 
     for(int j = 0; j < o.getSurfaces().size(); j++){
       Surface s = o.getSurfaces()[j];
+      //s.print();
       unsigned long surfaceColour = s.calcShade(colour, lightSource);
-      // drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y));
-      // drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p3.x), (int)(s.p3.y));
-      //  drawLine((int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y));
+      fillTriangle((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y), surfaceColour);
+      // colour+=20;
+      drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y));
+      drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p3.x), (int)(s.p3.y));
+      drawLine((int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y));
       // printf("%f\n", s.calcCentroid().z);
 
-      fillTriangle((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y), surfaceColour);
     }
   }
+
+  //fillTriangle(106, 316, 94, 324, 196, 316, 0);
+  //fillTriangle(94, 324,106, 316, 196, 316, 0);
+  //fillTriangle(196, 316, 106, 316, 94, 324, 0);
+  //drawLine(106, 316, 94, 324);
+  //drawLine(106, 316, 196, 316);
+  //drawLine(94, 324, 196, 316);
 }
 
 void MyWindow::fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3, unsigned long surfaceColour){
-  int yMax, xMax, yMid, xMid, yMin, xMin;
-  if(y1 > y2 && y1 > y3){
-    yMax = y1;
-    xMax = x1;
-    if(y2 > y3){
-      yMid = y2; xMid = x2;
-      yMin = y3; xMin = x3;
-    }
-    else {
-      yMid = y3; xMid = x3;
-      yMin = y2; xMin = x2;
-    }
+  int yMax = y1, xMax = x1, yMid = y2, xMid = x2, yMin = y3, xMin = x3;
+
+  if(yMin > yMid){
+    swap(yMin, yMid);
+    swap(xMin, xMid);
   }
-  else if (y2 > y1 && y2 > y3){
-    yMax = y2;
-    xMax = x2;
-    if(y2 > y3){
-      yMid = y2; xMid = x2;
-      yMin = y3; xMin = x3;
-    }
-    else {
-      yMid = y3; xMid = x3;
-      yMin = y2; xMin = x2;
-    }
+  if(yMid > yMax){
+    swap(yMid, yMax);
+    swap(xMid, xMax);
   }
-  else {
-    yMax = y3;
-    xMax = x3;
-    if(y2 > y1){
-      yMid = y2; xMid = x2;
-      yMin = y1; xMin = x1;
-    }
-    else {
-      yMid = y1; xMid = x1;
-      yMin = y2; xMin = x2;
-    }
+  if(yMin > yMid){
+    swap(yMin, yMid);
+    swap(xMin, xMid);
   }
+
 
   //printf("Trangle\t(%i,%i) - (%i,%i) - (%i,%i)\n", xMax,yMax,xMid,yMid,xMin,yMin);
 
