@@ -2,7 +2,7 @@
 #include "Torus.hpp"
 
 Torus::Torus(double innerRadius, double outerRadius){
-  this->resolution = 86;
+  this->resolution = 45;
 
   const double angle = 360.0 / this->resolution;
 

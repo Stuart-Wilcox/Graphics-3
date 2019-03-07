@@ -5,7 +5,7 @@
 
 
 Cone::Cone(double radius, double height){
-  this->resolution = 16;
+  this->resolution = 35;
 
   const double angle = 360.0 / this->resolution;
 
@@ -22,10 +22,10 @@ Cone::Cone(double radius, double height){
   Point top(0.0,height,0.0);
   Point centre(0.0,0.0,0.0);
 
-  this->addSurface(Surface(circle[0], circle[this->resolution-1], top));
-  this->addSurface(Surface(circle[0], circle[this->resolution-1], centre));
+  this->addSurface(Surface(circle[this->resolution-1], circle[0], top));
+  //this->addSurface(Surface(circle[0], circle[this->resolution-1], centre));
   for(int i = 1; i <= this->resolution; i++){
     this->addSurface(Surface(circle[i-1], circle[i], top));
-    this->addSurface(Surface(circle[i-1], circle[i], centre));
+    //this->addSurface(Surface(circle[i-1], circle[i], centre));
   }
 }
