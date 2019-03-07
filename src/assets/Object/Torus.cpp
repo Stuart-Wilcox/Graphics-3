@@ -30,6 +30,7 @@ Torus::Torus(double innerRadius, double outerRadius){
 
   for(int j = 0; j < this->resolution; j++){
     for(int i = 1; i < this->resolution; i++){
+      // order is super important here! Do no change
       this->addSurface(Surface(circle2[i-1],circle[i],circle[i-1]));
       this->addSurface(Surface(circle[i],circle2[i-1],circle2[i]));
     }

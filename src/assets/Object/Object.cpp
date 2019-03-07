@@ -10,11 +10,10 @@ void Object::addSurface(Surface surface){
 	Point points[3] = { surface.p1, surface.p2, surface.p3 };
 	std::set<Point>::iterator it;
 
+	// change the surface to replace points already on the object, or else add its unique points to the point set
 	for(int i = 0; i < 3; i++){
 		it = this->points.find(points[i]);
 		if(it != this->points.end()){
-			//printf("Point already in set\t");
-			//points[i].print();
 			// points[i] is in the set already
 			if(i == 0){
 				surface.p1 = *it;
@@ -29,16 +28,14 @@ void Object::addSurface(Surface surface){
 		else {
 			// point p1 is not in the set
 			this->points.insert(points[i]);
-			//printf("Point not in set\t");
-			//points[i].print();
 		}
 	}
 
-	// this->surfaces.push_back(surface);
-
 	if(this->surfaces.size() == 0){
-		this->surfaces.push_back(surface);
-	} else {
+		this->surfaces.push_back(surface); // first surface, no need for ordering
+	}
+	else {
+		// insert the surface by depth
 		double depth = surface.calcCentroid().z;
 		double curr = this->surfaces[0].calcCentroid().z;
 

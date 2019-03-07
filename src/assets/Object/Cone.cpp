@@ -23,9 +23,11 @@ Cone::Cone(double radius, double height){
   Point centre(0.0,0.0,0.0);
 
   this->addSurface(Surface(circle[this->resolution-1], circle[0], top));
+  // hollow-bottom cone
   //this->addSurface(Surface(circle[0], circle[this->resolution-1], centre));
   for(int i = 1; i <= this->resolution; i++){
     this->addSurface(Surface(circle[i-1], circle[i], top));
+    // hollow-bottom cone
     //this->addSurface(Surface(circle[i-1], circle[i], centre));
   }
 }

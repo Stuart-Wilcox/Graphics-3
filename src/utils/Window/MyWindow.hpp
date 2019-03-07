@@ -52,16 +52,17 @@ class MyWindow {
      * @param { int } y2
      * @param { int } x3
      * @param { int } y3
+     * @param { unsigned long } colour
      */
     void fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3, unsigned long);
 
     /**
-     *
+     * helper function for fill algorithm
      */
     void fillFlatBottomTriangle(int x1, int y1, int x2, int y2, int x3, int y3, unsigned long = 0);
 
     /**
-     *
+     * helper function for fill algorithm
      */
     void fillFlatTopTriangle(int x1, int y1, int x2, int y2, int x3, int y3, unsigned long = 0);
 

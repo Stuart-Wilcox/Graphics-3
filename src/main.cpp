@@ -23,7 +23,6 @@ int main(int argc, char *argv[]){
 	/* CHANGE BELOW LINE TO USE A DIFFERENT CAMERAS */
 	window.camera = getCamera5(); // set the window's camera
 
-
 	window.show(); // map and display graphic
 
 	return 0;
@@ -35,7 +34,6 @@ Scene getScene(){
   s1.translate(Point(250.0, 100.0, -500.0));
 
   Torus t1(75.0, 200.0);
-	//t1.rotateX(22.5);
   t1.translate(Point(-75.0, -150.0, -400.0));
 	t1.setColour(255l);
 

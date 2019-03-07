@@ -61,18 +61,16 @@ public:
 	 * */
 	void print();
 
-	void printPoints(){
-		printf("%i\n", this->points.size());
-		for(std::set<Point>::iterator it=this->points.begin(); it!=this->points.end();++it){
-			Point p = *it;
-			p.print();
-		}
-	}
-
+	/*
+   * Setter for the object colour
+	 * */
 	void setColour(unsigned long colour){
 		this->colour = colour;
 	}
 
+	/*
+	 * Getter for the object colour
+	 * */
 	unsigned long getColour(){
 		return this->colour;
 	}

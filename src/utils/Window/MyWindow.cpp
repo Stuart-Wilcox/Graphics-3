@@ -1,31 +1,9 @@
 #include <cstdio>
-#include <math.h>
+#include <cmath>
+#include <vector>
 #include "MyWindow.hpp"
 #include "../../assets/Camera/Camera.hpp"
 #include "../../assets/Scene/Scene.hpp"
-
-// simple abs function
-int abs(int x){
-  return x > 0 ? x : -1 * x;
-}
-
-int max(int a, int b, int c){
-  if(c > b && c > a) return c;
-  if(b > a && b > c) return b;
-  return a;
-}
-
-int mid(int a, int b, int c){
-  if((b < a && a < c) || (c < a && a < b)) return a;
-  if((a < b && b < c) || (c < b && b < a)) return b;
-  return c;
-}
-
-int min(int a, int b, int c){
-  if(a < b && a < c) return a;
-  if(b < a && b < c) return b;
-  return c;
-}
 
 void swap(int& a, int& b){
   int temp = a;
@@ -119,56 +97,33 @@ void MyWindow::close(){
   XCloseDisplay(display);
 }
 
-// relies on lower level drawLine to make the required shape
-void MyWindow::draw(){
-  // code given by assignment
-  double dt = 2.0 * M_PI / 200.0;
-  for(double t = 0.0; t < 2.0 * M_PI; ){
-
-    int x1 = 256 + (int)100.0*(1.5*cos(t) - cos(13.0*t));
-    int y1 = 256 + (int)100.0*(1.5*sin(t) - sin(13.0*t));
-     t += dt;
-    int x2 = 256 + (int)100.0*(1.5*cos(t) - cos(13.0*t));
-    int y2 = 256 + (int)100.0*(1.5*sin(t) - sin(13.0*t));
-
-    drawLine(x1, y1, x2, y2);
-  }
-}
-
 void MyWindow::drawScene(){
   Scene projected = camera.projectScene(scene);
   Point lightSource = scene.getLightSource();
 
-  for(int i = 0; i < projected.getObjects().size(); i++){
-    Object o = projected.getObjects()[i];
-    unsigned long colour = o.getColour();
-    printf("%i\n", (int)colour);
+  std::vector<Object> objects = projected.getObjects();
+  for(int i = 0; i < objects.size(); i++){
+    Object object = objects[i];
+    unsigned long objectColour = object.getColour();
+    std::vector<Surface> surfaces = object.getSurfaces();
 
-    for(int j = 0; j < o.getSurfaces().size(); j++){
-      Surface s = o.getSurfaces()[j];
-      //s.print();
-      unsigned long surfaceColour = s.calcShade(colour, lightSource);
+    for(int j = 0; j < surfaces.size(); j++){
+      Surface s = surfaces[j];
+      unsigned long surfaceColour = s.calcShade(objectColour, lightSource);
+
       fillTriangle((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y), surfaceColour);
-      // colour+=20;
+
       //drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y));
       //drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p3.x), (int)(s.p3.y));
       //drawLine((int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y));
-      // printf("%f\n", s.calcCentroid().z);
-
     }
   }
-
-  //fillTriangle(0, 0, 512, 0, 256, 512, 100);
-  //fillTriangle(94, 324,106, 316, 196, 316, 0);
-  //fillTriangle(196, 316, 106, 316, 94, 324, 0);
-  //drawLine(106, 316, 94, 324);
-  //drawLine(106, 316, 196, 316);
-  //drawLine(94, 324, 196, 316);
 }
 
 void MyWindow::fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3, unsigned long surfaceColour){
   int yMax = y1, xMax = x1, yMid = y2, xMid = x2, yMin = y3, xMin = x3;
 
+  // sort the xy coordinates to know which are larger than others
   if(yMin > yMid){
     swap(yMin, yMid);
     swap(xMin, xMid);
@@ -182,9 +137,6 @@ void MyWindow::fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3, unsi
     swap(xMin, xMid);
   }
 
-
-  //printf("Trangle\t(%i,%i) - (%i,%i) - (%i,%i)\n", xMax,yMax,xMid,yMid,xMin,yMin);
-
   if(yMin == yMid){
     fillFlatBottomTriangle(xMax, yMax, xMid, yMid, xMin, yMin, surfaceColour);
   }
@@ -192,6 +144,7 @@ void MyWindow::fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3, unsi
     fillFlatTopTriangle(xMax, yMax, xMid, yMid, xMin, yMin, surfaceColour);
   }
   else {
+    // split the triangle into twwo triangles, one with flat top and one with flat bottom
     int yNew, xNew;
 
     xNew = (int)(xMax + ((double)(yMid - yMax) / (double)(yMin - yMax)) * (xMin - xMax));
@@ -203,14 +156,15 @@ void MyWindow::fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3, unsi
 }
 
 void MyWindow::fillFlatBottomTriangle(int x1, int y1, int x2, int y2, int x3, int y3, unsigned long colour){
-  // printf("Flat Bottom Trangle\t(%i,%i) - (%i,%i) - (%i,%i)\n", x1,y1,x2,y2,x3,y3);
-
+  // make sure we dont get a divide by zero error
   if(y1 == y2) y1++;
   if(y2 == y3) y3--;
 
+  // inverse slope
   double m1 = (double)(x1-x2)/(double)(y1-y2);
   double m2 = (double)(x1-x3)/(double)(y1-y3);
 
+  // current x position on each arm of the triangle
   double cx1 = x2;
   double cx2 = x3;
 
@@ -222,14 +176,15 @@ void MyWindow::fillFlatBottomTriangle(int x1, int y1, int x2, int y2, int x3, in
 }
 
 void MyWindow::fillFlatTopTriangle(int x1, int y1, int x2, int y2, int x3, int y3, unsigned long colour){
-  //  printf("Flat Top Trangle\t(%i,%i) - (%i,%i) - (%i,%i)\n", x1,y1,x2,y2,x3,y3);
-
+  // make sure we dont get a divide by zero error
   if(y1 == y3) y1++;
   if(y2 == y3) y3--;
 
+  // inverse slope
   double m1 = (double)(x1-x3)/(double)(y1-y3);
   double m2 = (double)(x2-x3)/(double)(y2-y3);
 
+  // current x position on each arm of the triangle
   double cx1 = x1;
   double cx2 = x2;
 

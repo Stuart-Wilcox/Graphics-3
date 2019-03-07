@@ -23,12 +23,10 @@ Sphere::Sphere(double radius){
 
   for(int j = 0; j < 2*this->resolution; j++){
     for(int i = 1; i <= this->resolution; i++){
-      //
+      // order is super important here! Do not change this
       this->addSurface(Surface(semiCircle[i-1],semiCircle[i],semiCircle2[i-1]));
-      //
       this->addSurface(Surface(semiCircle2[i],semiCircle2[i-1],semiCircle[i]));
     }
-
 
     for(int i = 0; i < this->resolution; i++){
       semiCircle[i] = semiCircle2[i];
