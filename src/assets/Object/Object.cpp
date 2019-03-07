@@ -4,8 +4,7 @@
 #include "../Edge/Edge.hpp"
 
 
-Object::Object(): surfaces() {
-}
+Object::Object(): surfaces() {}
 
 void Object::addSurface(Surface surface){
 	Point points[3] = { surface.p1, surface.p2, surface.p3 };

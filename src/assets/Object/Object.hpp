@@ -14,8 +14,8 @@ class Object {
 protected:
 	std::set<Point> points;
 	std::vector<Surface> surfaces;
-public:
 	unsigned long colour;
+public:
 
 	/*
 	 * Creates a new object with no vertices
@@ -67,6 +67,14 @@ public:
 			Point p = *it;
 			p.print();
 		}
+	}
+
+	void setColour(unsigned long colour){
+		this->colour = colour;
+	}
+
+	unsigned long getColour(){
+		return this->colour;
 	}
 };
 

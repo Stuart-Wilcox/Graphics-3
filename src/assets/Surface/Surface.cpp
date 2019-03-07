@@ -68,7 +68,7 @@ unsigned long Surface::calcShade(unsigned long colour, Point lightSource){
   double coefficient = (2 * angle / 3.141528);
 
   //printf("%f\n",angle);
-  return colour - (255*coefficient);
+  return (colour*coefficient);
 }
 
 Surface Surface::translate(Point point){

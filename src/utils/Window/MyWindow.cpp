@@ -141,7 +141,8 @@ void MyWindow::drawScene(){
 
   for(int i = 0; i < projected.getObjects().size(); i++){
     Object o = projected.getObjects()[i];
-    unsigned long colour = o.colour;
+    unsigned long colour = o.getColour();
+    printf("%i\n", (int)colour);
 
     for(int j = 0; j < o.getSurfaces().size(); j++){
       Surface s = o.getSurfaces()[j];
@@ -149,15 +150,15 @@ void MyWindow::drawScene(){
       unsigned long surfaceColour = s.calcShade(colour, lightSource);
       fillTriangle((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y), surfaceColour);
       // colour+=20;
-      drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y));
-      drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p3.x), (int)(s.p3.y));
-      drawLine((int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y));
+      //drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y));
+      //drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p3.x), (int)(s.p3.y));
+      //drawLine((int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y));
       // printf("%f\n", s.calcCentroid().z);
 
     }
   }
 
-  //fillTriangle(106, 316, 94, 324, 196, 316, 0);
+  //fillTriangle(0, 0, 512, 0, 256, 512, 100);
   //fillTriangle(94, 324,106, 316, 196, 316, 0);
   //fillTriangle(196, 316, 106, 316, 94, 324, 0);
   //drawLine(106, 316, 94, 324);
