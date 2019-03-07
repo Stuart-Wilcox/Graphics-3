@@ -26,6 +26,26 @@ public:
 	Point(double, double, double);
 
 	/*
+	 * Calculate the magnitude
+	 * */
+	double calcMagnitude();
+
+	/*
+	 * cross product of two points
+	 * */
+	Point cross(Point);
+
+	/*
+	 * dot product of two points
+	 * */
+	 double dot(Point);
+
+	/*
+	 * normalize vector
+	 * */
+	 Point normalize();
+
+	/*
 	 * Rotates the point about the X-Axis by the given amount of degrees
 	 * */
 	Point rotateX(double);

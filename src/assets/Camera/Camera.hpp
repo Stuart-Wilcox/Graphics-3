@@ -13,10 +13,21 @@
  */
 class Camera {
 public:
-  Matrix camera;
-  Point position;
-  Point orientation;
+  Matrix m1;
+  Matrix m2;
+  Matrix m3;
 
+  Point position;
+  Point gaze;
+
+  Point p;
+  Point u;
+  Point v;
+  Point n;
+
+  double a;
+  double b;
+public:
   /*
    * Projects a single point
    */
@@ -41,7 +52,7 @@ public:
   /*
    * Creates a new camera at the given point, with Tait-Bryan angles given
    */
-  Camera(Point, double, double, double);
+  Camera(Point, Point, double, double);
 
   /*
    * Finds the projection of the objects in the given scene and returns a new scene with the modified objects

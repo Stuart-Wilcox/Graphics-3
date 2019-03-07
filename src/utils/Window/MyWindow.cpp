@@ -98,6 +98,8 @@ void MyWindow::close(){
 }
 
 void MyWindow::drawScene(){
+  // Point p = camera.projectPoint(Point(0,0,0));
+  // p.print();
   Scene projected = camera.projectScene(scene);
   Point lightSource = scene.getLightSource();
 
@@ -111,7 +113,7 @@ void MyWindow::drawScene(){
       Surface s = surfaces[j];
       unsigned long surfaceColour = s.calcShade(objectColour, lightSource);
 
-      fillTriangle((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y), surfaceColour);
+      // fillTriangle((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y), surfaceColour);
 
       //drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y));
       //drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p3.x), (int)(s.p3.y));

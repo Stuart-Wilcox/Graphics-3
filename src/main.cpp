@@ -9,19 +9,14 @@
 #include "assets/Object/Cone.hpp"
 
 Scene getScene();
-Camera getCamera1();
-Camera getCamera2();
-Camera getCamera3();
-Camera getCamera4();
-Camera getCamera5();
+Camera getCamera();
 
 int main(int argc, char *argv[]){
 	MyWindow window; // create a window
 
 	window.scene = getScene(); // set the window's scene
 
-	/* CHANGE BELOW LINE TO USE A DIFFERENT CAMERAS */
-	window.camera = getCamera5(); // set the window's camera
+	window.camera = getCamera(); // set the window's camera
 
 	window.show(); // map and display graphic
 
@@ -52,22 +47,16 @@ Scene getScene(){
 	return scene;
 }
 
-Camera getCamera1(){
-	return Camera(Point(0.0, 100.0, 0.0), 0.0, 0.0, 0.0);
-}
+Camera getCamera(){
+	Point position(5.0,5.0,5.0);
+	Point gaze(0.0,0.0,0.0);
+	double near = 5.0;
+	double far = 100.0;
+	Camera cam(position, gaze, near, far);
 
-Camera getCamera2(){
-	return Camera(Point(450.0, 150.0, -450.0), 0.0, 90.0, 0.0);
-}
+	//cam.m1.print();
+	//cam.m2.print();
+	cam.m3.print();
 
-Camera getCamera3(){
-	return Camera(Point(0.0, 150.0, -900.0), 0.0, 180.0, 0.0);
-}
-
-Camera getCamera4(){
-	return Camera(Point(-450.0, -300.0, -600.0), 45.0, 270.0, 0.0);
-}
-
-Camera getCamera5(){
-	return Camera(Point(0.0, 400.0, 0.0), 315.0, 0.0, 0.0);
+	return cam;
 }

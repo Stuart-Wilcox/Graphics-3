@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <cmath>
 #include "Point.hpp"
 #include "../../utils/Matrix/Matrix.hpp"
 
@@ -6,6 +7,33 @@ Point::Point(double x, double y, double z){
 	this->x = x;
 	this->y = y;
 	this->z = z;
+}
+
+double Point::calcMagnitude(){
+	return sqrt((this->x*this->x) + (this->y*this->y) + (this->z*this->z));
+}
+
+Point Point::cross(Point p){
+	// 23 31 12
+	return Point(
+		(this->y*p.z) - (this->z*p.y),
+		(this->z*p.x) - (this->x*p.z),
+		(this->x*p.y) - (this->y*p.x)
+	);
+}
+
+double Point::dot(Point p){
+	return (this->x*p.x) + (this->y*p.y) + (this->z*p.z);
+}
+
+Point Point::normalize(){
+	double magnitude = this->calcMagnitude();
+
+	return Point(
+		this->x / magnitude,
+		this->y / magnitude,
+		this->z / magnitude
+	);
 }
 
 void Point::print(){
