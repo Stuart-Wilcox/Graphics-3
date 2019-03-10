@@ -39,4 +39,15 @@ Before submitting your assignment, please refer to the [assignment marking](http
 2. Close the window by typing 'q' or clicking the 'X' button
 
 ## Ouput
-![ball.png](photos/Ball.png)
+![Screenshot.png](photos/Screenshot.png)
+
+## How it works
+1. Firstly some objects are made. For the sample scene, I included a sphere, torus and cone. These objects are a collection of Surfaces, which is essentially a triangle in 3D space.
+
+2. Once the objects are made, they are added to the scene. The scene also obtains a light source, which is just a position in 3D space where the light source resides. The lightsource does not have a concept of intensity (ie. the intensity is always 1).
+
+3. A Camera is made, which is able to take the scene and project it to what the window would see through a synthetic camera.
+
+4. Each of the projected objects in the scene is drawn to the screen. The objects' Surfaces calculate their shading, based on the object's base colour as well as the angle between the Surface's normal and a vector pointing to the lightsource.
+
+5. Each Surface, now projected and shade calculated, is drawn using a triangle filling algorithm. This algorithm works by separating the triangle into two more triangles; one with a flat top and one with a flat bottom. From there the process of filling each triangle is simple.  

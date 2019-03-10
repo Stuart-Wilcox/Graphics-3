@@ -98,23 +98,26 @@ void MyWindow::close(){
 }
 
 void MyWindow::drawScene(){
-  Scene projected = camera.projectScene(scene);
-  Point lightSource = scene.getLightSource();
+  Scene projected = camera.projectScene(scene); // project the scene into the window's world
+  Point lightSource = scene.getLightSource(); // obtain the light source for the scene
 
+  // iterate over objects in scene
   std::vector<Object> objects = projected.getObjects();
   for(int i = 0; i < objects.size(); i++){
     Object object = objects[i];
     XColor objectColour = object.getColour();
-    std::vector<Surface> surfaces = object.getSurfaces();
 
+    // iterate over surfaces in object
+    std::vector<Surface> surfaces = object.getSurfaces();
     for(int j = 0; j < surfaces.size(); j++){
       Surface s = surfaces[j];
-      XColor surfaceColour = s.calcShade(objectColour, lightSource);
+      XColor surfaceColour = s.calcShade(objectColour, lightSource); // obtain the calculated surface colour
 
-      // calculate the colour based on the XColor
+      // turn the XColor into an unsigned long
       // dont ask why this works. took lots of trial and error...
       unsigned long colour = (surfaceColour.blue) + (surfaceColour.green << 8) + (surfaceColour.red << 16);
 
+      // run the triangle filling algo on the surface, using the calculated colour
       fillTriangle((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y), colour);
 
       // uncomment this to draw the lines on the objects
