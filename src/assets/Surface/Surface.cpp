@@ -46,7 +46,7 @@ Point Surface::calcCentroid(){
   );
 }
 
-unsigned long Surface::calcShade(unsigned long colour, Point lightSource){
+XColor Surface::calcShade(XColor colour, Point lightSource){
   Point normal = this->calcNormal();
   Point centroid = this->calcCentroid();
 
@@ -68,7 +68,12 @@ unsigned long Surface::calcShade(unsigned long colour, Point lightSource){
   double coefficient = (2 * angle / 3.141528);
 
   //printf("%f\n",angle);
-  return (colour*coefficient);
+  XColor shade;
+  shade.red = colour.red * coefficient;
+  shade.blue = colour.blue * coefficient;
+  shade.green = colour.green * coefficient;
+  shade.flags = DoRed | DoGreen | DoBlue;
+  return shade;
 }
 
 Surface Surface::translate(Point point){

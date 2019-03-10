@@ -104,15 +104,20 @@ void MyWindow::drawScene(){
   std::vector<Object> objects = projected.getObjects();
   for(int i = 0; i < objects.size(); i++){
     Object object = objects[i];
-    unsigned long objectColour = object.getColour();
+    XColor objectColour = object.getColour();
     std::vector<Surface> surfaces = object.getSurfaces();
 
     for(int j = 0; j < surfaces.size(); j++){
       Surface s = surfaces[j];
-      unsigned long surfaceColour = s.calcShade(objectColour, lightSource);
+      XColor surfaceColour = s.calcShade(objectColour, lightSource);
 
-      fillTriangle((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y), surfaceColour);
+      // calculate the colour based on the XColor
+      // dont ask why this works. took lots of trial and error...
+      unsigned long colour = (surfaceColour.blue) + (surfaceColour.green << 8) + (surfaceColour.red << 16);
 
+      fillTriangle((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y), colour);
+
+      // uncomment this to draw the lines on the objects
       //drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p2.x), (int)(s.p2.y));
       //drawLine((int)(s.p1.x), (int)(s.p1.y), (int)(s.p3.x), (int)(s.p3.y));
       //drawLine((int)(s.p2.x), (int)(s.p2.y), (int)(s.p3.x), (int)(s.p3.y));

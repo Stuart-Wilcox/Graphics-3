@@ -1,6 +1,8 @@
 #ifndef SURFACE_H
 #define SURFACE_H
 
+#include <X11/Xlib.h>
+
 #include "../Edge/Edge.hpp"
 #include "../Point/Point.hpp"
 
@@ -16,7 +18,7 @@ public:
 
   Point calcCentroid();
 
-  unsigned long calcShade(unsigned long colour, Point lightSource);
+  XColor calcShade(XColor colour, Point lightSource);
 
   Surface translate(Point);
 

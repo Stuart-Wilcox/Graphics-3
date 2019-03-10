@@ -60,7 +60,7 @@ Scene Camera::projectScene(Scene scene){
 
 Object Camera::projectObject(Object object){
   Object o;
-  o.setColour(object.getColour());
+  o.setColour(object.getColour().red, object.getColour().green, object.getColour().blue);
   std::vector<Surface> s = object.getSurfaces();
   for(int i = 0; i < s.size(); i++){
     o.addSurface(this->projectSurface(s[i]));

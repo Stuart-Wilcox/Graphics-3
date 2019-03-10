@@ -30,17 +30,17 @@ int main(int argc, char *argv[]){
 
 Scene getScene(){
 	Sphere s1(175.0);
-	s1.setColour(255l);
+	s1.setColour(255, 0, 0);
   s1.translate(Point(250.0, 100.0, -500.0));
 
   Torus t1(75.0, 200.0);
   t1.translate(Point(-75.0, -150.0, -400.0));
-	t1.setColour(255l);
+	t1.setColour(0, 255, 0);
 
 	Cone c1(150.0, 175.0);
 	c1.rotateY(180.0);
 	c1.translate(Point(-150.0, 150.0, -600.0));
-	c1.setColour(255l);
+	c1.setColour(0, 0, 255);
 
   Scene scene;
 	scene.addObject(t1);

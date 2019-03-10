@@ -14,7 +14,7 @@ class Object {
 protected:
 	std::set<Point> points;
 	std::vector<Surface> surfaces;
-	unsigned long colour;
+	XColor colour;
 public:
 
 	/*
@@ -64,14 +64,17 @@ public:
 	/*
    * Setter for the object colour
 	 * */
-	void setColour(unsigned long colour){
-		this->colour = colour;
+	void setColour(unsigned short red, unsigned short green, unsigned short blue){
+		this->colour.red = red;
+		this->colour.green = green;
+		this->colour.blue = blue;
+		this->colour.flags = DoRed | DoGreen | DoBlue;
 	}
 
 	/*
 	 * Getter for the object colour
 	 * */
-	unsigned long getColour(){
+	XColor getColour(){
 		return this->colour;
 	}
 };
