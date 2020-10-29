@@ -1,3 +1,5 @@
+![out.gif](out.gif)
+
 # CS3388 Assignment 3
 
 [Course Website](https://owl.uwo.ca/access/content/group/1b026160-e391-4236-b962-9783a9ab6a99/CS3388-Outline.html)
